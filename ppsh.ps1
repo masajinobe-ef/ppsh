@@ -17,12 +17,12 @@ function Get-IPInfo {
         $response = Invoke-RestMethod -Uri $url
     } catch [System.Net.HttpStatusCode] {
         if ($_.Exception.Response.StatusCode -eq '429') {
-            Write-Host "Ошибка: В базе данных IP API не найдено местонахождение DNS-сервера."
+            Write-Host "Error: DNS-server location was not found in the IP API database."
         } else {
-            Write-Host "Произошла ошибка HTTP: $($_.Exception.Message)"
+            Write-Host "An HTTP error has occurred: $($_.Exception.Message)"
         }
     } catch {
-        Write-Host "Произошла ошибка: $($_.Exception.Message)"
+        Write-Host "An error has occurred: $($_.Exception.Message)"
     }
 
     $country = $response.country
@@ -76,14 +76,14 @@ foreach ($ip in $ipAddresses) {
     }
 
     # Вывод комментария после каждого проверенного IP
-    Write-Host "IP-адрес $ip проверен."
+    Write-Host "IP address of $ip has been checked."
 }
 
 # Установка DNS-серверов, если они были указаны
 if ($SetDnsServers) {
     Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses $SetDnsServers
 
-    Write-Host "Установлены DNS-сервера: $($SetDnsServers -join '; ')"
+    Write-Host "DNS-servers are setup: $($SetDnsServers -join '; ')"
 }
 
 # Установка DNS-серверов, если параметр SetFastestDns указан
@@ -95,9 +95,9 @@ if ($SetFastestDns) {
 
         Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses $fastestDnsServers
 
-        Write-Host "Установлены самые быстрые DNS-сервера: $formattedDnsServers"
+        Write-Host "The fastest DNS-servers are setup: $formattedDnsServers"
     } catch {
-        Write-Host "Ошибка при установке DNS-серверов: $($_.Exception.Message)"
+        Write-Host "Error setup DNS-servers: $($_.Exception.Message)"
     }
 }
 
@@ -108,4 +108,4 @@ $sortedConnectionSpeeds = $connectionSpeeds | Sort-Object -Property AveragePing
 $sortedConnectionSpeeds | Format-Table -Property IPAddress, Country, City, AveragePing, RequestsSent -AutoSize
 
 # Вывод информации о завершени
-Write-Host "Успешно!`nВсего проверено IP: $($sortedConnectionSpeeds.Count)"
+Write-Host "Success!`nTotal IP checked: $($sortedConnectionSpeeds.Count)"
