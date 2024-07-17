@@ -1,6 +1,6 @@
-# PPShell (PPSH)
+# PPShell
 
-PPShell (PPSH) - It is a tool for managing DNS servers and checking their status using PowerShell.
+**PPShell - It is a tool for managing DNS servers and checking their status using PowerShell.**
 
 <p align="center">
   <img width="100%" src="/pics/1.png" alt="1"/>
@@ -19,8 +19,7 @@ PPShell (PPSH) - It is a tool for managing DNS servers and checking their status
 ## Using
 
 ```bash
-./ppsh.ps1 # Count = 2
-./ppsh.ps1 -Count 10
+./ppsh.ps1 -Count 10 # default Count = 2
 ./ppsh.ps1 -SetFastestDns
 ./ppsh.ps1 -SetDnsServers ("8.8.8.8","8.8.4.4")
 ```
